@@ -65,7 +65,7 @@ export function initSprites(img) {
   s_numberS = new Sprite(img, 0, 177, 6, 7);
   s_numberB = new Sprite(img, 0, 188, 7, 10);
 
-  s_numberS.draw = s_numberB.draw = function (ctx, x, y, num, center) {
+  s_numberS.draw = s_numberB.draw = function (ctx, x, y, num, center, offset) {
     num = num.toString();
 
     var step = this.width + 2;
@@ -73,7 +73,9 @@ export function initSprites(img) {
     if (center) {
       x = center - (num.length * step - 2) / 2;
     }
-
+    if (offset) {
+      x += step * (offset - num.length);
+    }
     for (var i = 0, len = num.length; i < len; i++) {
       var n = parseInt(num[i]);
       ctx.drawImage(
