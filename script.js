@@ -77,10 +77,6 @@ let bird = {
     ctx.translate(this.x, this.y);
     ctx.rotate(this.rotation);
 
-    ctx.beginPath();
-    ctx.arc(0, 0, this.radius, 0, 2 * Math.PI);
-    ctx.stroke();
-
     let n = this.animation[this.frame];
 
     s_bird[n].draw(ctx, -s_bird[n].width / 2, -s_bird[n].height / 2);
@@ -216,9 +212,9 @@ function render() {
   s_bg.draw(ctx, 0, height - s_bg.height);
   s_bg.draw(ctx, s_bg.width, height - s_bg.height);
 
-  bird.draw(ctx);
-
   pipes.draw(ctx);
+
+  bird.draw(ctx);
 
   s_fg.draw(ctx, fgpos, height - s_fg.height);
   s_fg.draw(ctx, fgpos + s_fg.width, height - s_fg.height);
@@ -230,3 +226,8 @@ function render() {
   }
 }
 main();
+
+// ctx.fillStyle = "#f00";
+// ctx.beginPath();
+// ctx.arc(0, 0, this.radius, 0, 2 * Math.PI);
+// ctx.fill();
