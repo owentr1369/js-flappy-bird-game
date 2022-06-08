@@ -39,7 +39,13 @@ let bird = {
     this.velocity = -this._jump;
   },
 
-  update: function () {},
+  update: function () {
+    var n = currentState === states.Splash ? 10 : 5;
+
+    // flapping
+    this.frame += frames % n === 0 ? 1 : 0;
+    this.frame %= this.animation.length;
+  },
   draw: function (ctx) {
     ctx.save();
     ctx.translate(this.x, this.y);
@@ -52,9 +58,7 @@ let bird = {
   },
 };
 let pipes = {
-  update: function () {
-    let n = currentState === states.Splash ? 10 : 5;
-  },
+  update: function () {},
   draw: function () {},
 };
 
@@ -73,6 +77,8 @@ function main() {
   canvas.height = height;
   //   canvas.style.border = "1px solid #000";
   ctx = canvas.getContext("2d");
+
+  currentState = states.Splash;
 
   document.body.appendChild(canvas);
 
@@ -96,6 +102,8 @@ function run() {
 function update() {
   frames++;
   fgpos = (fgpos - 2) % 14;
+  bird.update();
+  pipes.update();
 }
 function render() {
   ctx.fillRect(0, 0, width, height);
@@ -104,6 +112,8 @@ function render() {
   s_bg.draw(ctx, s_bg.width, height - s_bg.height);
 
   bird.draw(ctx);
+
+  pipes.draw(ctx);
 
   s_fg.draw(ctx, fgpos, height - s_fg.height);
   s_fg.draw(ctx, fgpos + s_fg.width, height - s_fg.height);
