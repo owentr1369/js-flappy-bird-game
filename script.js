@@ -32,6 +32,7 @@ let bird = {
   frame: 0,
   animation: [0, 1, 2, 1],
   rotation: 0,
+  radius: 12,
   gravity: 0.25,
   _jump: 4.6,
 
@@ -76,6 +77,10 @@ let bird = {
     ctx.translate(this.x, this.y);
     ctx.rotate(this.rotation);
 
+    ctx.beginPath();
+    ctx.arc(0, 0, this.radius, 0, 2 * Math.PI);
+    ctx.stroke();
+
     let n = this.animation[this.frame];
 
     s_bird[n].draw(ctx, -s_bird[n].width / 2, -s_bird[n].height / 2);
@@ -98,6 +103,28 @@ let pipes = {
     }
     for (let i = 0, len = this._pipes.length; i < len; i++) {
       let p = this._pipes[i];
+
+      if (i === 0) {
+        let cx = Math.min(Math.max(bird.x, p.x), p.x + p.width);
+        let cy1 = Math.min(Math.max(bird.y, p.y), p.y + p.height);
+        let cy2 = Math.min(
+          Math.max(bird.y, p.y + p.height + 80),
+          p.y + 2 * p.height + 80
+        );
+
+        let dx = bird.x - cx;
+        let dy1 = bird.y - cy1;
+        var dy2 = bird.y - cy2;
+
+        var d1 = dx * dx + dy1 * dy1;
+        var d2 = dx * dx + dy2 * dy2;
+
+        let r = bird.radius * bird.radius;
+
+        if (r > d1 || r > d2) {
+          currentState = states.Score;
+        }
+      }
 
       p.x -= 2;
       if (p.x < -50) {
