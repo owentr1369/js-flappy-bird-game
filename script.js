@@ -27,8 +27,8 @@ const states = {
   Score: 2,
 };
 let bird = {
-  x: 80,
-  y: 120,
+  x: 60,
+  y: 0,
   frame: 0,
   animation: [0, 1, 2, 1],
   rotation: 0,
@@ -45,6 +45,12 @@ let bird = {
     // flapping
     this.frame += frames % n === 0 ? 1 : 0;
     this.frame %= this.animation.length;
+
+    // moving up and down
+    if (currentState === states.Splash) {
+      this.y = height - 280 + 5 * Math.cos(frames / 10);
+      this.rotate = 0;
+    }
   },
   draw: function (ctx) {
     ctx.save();
@@ -75,7 +81,7 @@ function main() {
   }
   canvas.width = width;
   canvas.height = height;
-  //   canvas.style.border = "1px solid #000";
+
   ctx = canvas.getContext("2d");
 
   currentState = states.Splash;
@@ -117,5 +123,11 @@ function render() {
 
   s_fg.draw(ctx, fgpos, height - s_fg.height);
   s_fg.draw(ctx, fgpos + s_fg.width, height - s_fg.height);
+  let width2 = width / 2;
+
+  if (currentState === states.Splash) {
+    s_splash.draw(ctx, width2 - s_splash.width / 2, height - 300);
+    s_text.GetReady.draw(ctx, width2 - s_text.GetReady.width / 2, height - 380);
+  }
 }
 main();
