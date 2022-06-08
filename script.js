@@ -1,4 +1,16 @@
-import { s_bg, initSprites } from "./sprite.js";
+import {
+  s_bg,
+  s_fg,
+  s_pipeNorth,
+  s_pipeSouth,
+  s_text,
+  s_score,
+  s_splash,
+  s_buttons,
+  s_numberS,
+  s_numberB,
+  initSprites,
+} from "./sprite.js";
 
 let canvas, ctx, width, height;
 let frames = 0;
@@ -36,6 +48,7 @@ function main() {
 
   img.onload = function () {
     initSprites(this);
+    ctx.fillStyle = s_bg.color;
     run();
   };
   img.src = "./assets/sheet.png";
@@ -50,7 +63,12 @@ function run() {
 }
 function update() {}
 function render() {
+  ctx.fillRect(0, 0, width, height);
+
   s_bg.draw(ctx, 0, height - s_bg.height);
   s_bg.draw(ctx, s_bg.width, height - s_bg.height);
+
+  s_fg.draw(ctx, 0, height - s_fg.height);
+  s_fg.draw(ctx, s_fg.width, height - s_fg.height);
 }
 main();
