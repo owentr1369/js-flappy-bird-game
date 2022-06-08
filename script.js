@@ -224,6 +224,11 @@ function render() {
     s_splash.draw(ctx, width2 - s_splash.width / 2, height - 300);
     s_text.GetReady.draw(ctx, width2 - s_text.GetReady.width / 2, height - 380);
   }
+
+  if (currentState === states.Score) {
+    s_text.GameOver.draw(ctx, width2 - s_text.GameOver.width / 2, height - 400);
+    s_score.draw(ctx, width2 - s_score.width / 2, height - 340);
+  }
 }
 main();
 
