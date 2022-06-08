@@ -49,14 +49,14 @@ let bird = {
     // moving up and down
     if (currentState === states.Splash) {
       this.y = height - 280 + 5 * Math.cos(frames / 10);
-      this.rotate = 0;
+      this.rotation = 0;
     } else {
       this.velocity += this.gravity;
       this.y += this.velocity;
 
       // click to jump
       if (this.y >= height - s_fg.height - 10) {
-        this.y = height - s_bg.height - 10;
+        this.y = height - s_fg.height - 10;
         if (currentState === states.Game) {
           currentState = states.Score;
         }
@@ -144,9 +144,11 @@ function run() {
 }
 function update() {
   frames++;
-  fgpos = (fgpos - 2) % 14;
+  if (currentState !== states.Score) {
+    fgpos = (fgpos - 2) % 14;
+    pipes.update();
+  }
   bird.update();
-  pipes.update();
 }
 function render() {
   ctx.fillRect(0, 0, width, height);
