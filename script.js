@@ -83,8 +83,37 @@ let bird = {
   },
 };
 let pipes = {
-  update: function () {},
-  draw: function () {},
+  _pipes: [],
+  reset: function () {},
+  update: function () {
+    if (frames % 100 === 0) {
+      let _y =
+        height - (s_pipeSouth.height + s_fg.height + 120 + 200 * Math.random());
+      this._pipes.push({
+        x: 500,
+        y: _y,
+        width: s_pipeSouth.width,
+        height: s_pipeSouth.height,
+      });
+    }
+    for (let i = 0, len = this._pipes.length; i < len; i++) {
+      let p = this._pipes[i];
+
+      p.x -= 2;
+      if (p.x < -50) {
+        this._pipes.splice(i, 1);
+        i--;
+        len--;
+      }
+    }
+  },
+  draw: function (ctx) {
+    for (let i = 0, len = this._pipes.length; i < len; i++) {
+      let p = this._pipes[i];
+      s_pipeSouth.draw(ctx, p.x, p.y);
+      s_pipeNorth.draw(ctx, p.x, p.y + 80 + p.height);
+    }
+  },
 };
 
 function onpress(evt) {
@@ -146,8 +175,12 @@ function update() {
   frames++;
   if (currentState !== states.Score) {
     fgpos = (fgpos - 2) % 14;
+  }
+
+  if (currentState === states.Game) {
     pipes.update();
   }
+
   bird.update();
 }
 function render() {
