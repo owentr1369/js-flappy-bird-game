@@ -87,7 +87,9 @@ let bird = {
 };
 let pipes = {
   _pipes: [],
-  reset: function () {},
+  reset: function () {
+    this._pipes = [];
+  },
   update: function () {
     if (frames % 100 === 0) {
       let _y =
@@ -151,6 +153,19 @@ function onpress(evt) {
       bird.jump();
       break;
     case states.Score:
+      let mx = evt.offsetX,
+        my = evt.offsetY;
+
+      if (
+        okbtn.x < mx &&
+        mx < okbtn.x + okbtn.width &&
+        okbtn.y < my &&
+        my < okbtn.y + okbtn.height
+      ) {
+        pipes.reset();
+        currentState = states.Splash;
+        score = 0;
+      }
       break;
   }
 }
