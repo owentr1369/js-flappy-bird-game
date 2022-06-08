@@ -68,17 +68,35 @@ let pipes = {
   draw: function () {},
 };
 
+function onpress(evt) {
+  switch (currentState) {
+    case states.Splash:
+      currentState = states.Game;
+      bird.jump();
+      break;
+    case states.Game:
+      bird.jump();
+      break;
+    case states.Score:
+      break;
+  }
+}
+
 function main() {
   canvas = document.createElement("canvas");
 
   width = window.innerWidth;
   height = window.innerHeight;
-
+  let evt = "touchstart";
   if (width >= 500) {
     width = 320;
     height = 480;
     canvas.style.border = "1px solid #000";
+    evt = "mousedown";
   }
+  // remove getReady
+  document.addEventListener(evt, onpress);
+
   canvas.width = width;
   canvas.height = height;
 
