@@ -62,6 +62,13 @@ let bird = {
         }
         this.velocity = this._jump;
       }
+      // Rotate bird when click
+      if (this.velocity >= this._jump) {
+        this.frame = 1;
+        this.rotation = Math.min(Math.PI / 2, this.rotation + 0.3);
+      } else {
+        this.rotation = -0.3;
+      }
     }
   },
   draw: function (ctx) {
