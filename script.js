@@ -158,6 +158,11 @@ function onpress(evt) {
       let mx = evt.offsetX,
         my = evt.offsetY;
 
+      if ((mx == null, my == null)) {
+        mx = evt.touches[0].clientX;
+        my = evt.touches[0].clientY;
+      }
+
       if (
         okbtn.x < mx &&
         mx < okbtn.x + okbtn.width &&
@@ -225,6 +230,8 @@ function update() {
   frames++;
   if (currentState !== states.Score) {
     fgpos = (fgpos - 2) % 14;
+  } else {
+    best = Math.max(best, score);
   }
 
   if (currentState === states.Game) {
