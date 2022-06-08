@@ -50,6 +50,18 @@ let bird = {
     if (currentState === states.Splash) {
       this.y = height - 280 + 5 * Math.cos(frames / 10);
       this.rotate = 0;
+    } else {
+      this.velocity += this.gravity;
+      this.y += this.velocity;
+
+      // click to jump
+      if (this.y >= height - s_fg.height - 10) {
+        this.y = height - s_bg.height - 10;
+        if (currentState === states.Game) {
+          currentState = states.Score;
+        }
+        this.velocity = this._jump;
+      }
     }
   },
   draw: function (ctx) {
