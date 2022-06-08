@@ -105,6 +105,8 @@ let pipes = {
       let p = this._pipes[i];
 
       if (i === 0) {
+        score += p.x === bird.x ? 1 : 0;
+
         let cx = Math.min(Math.max(bird.x, p.x), p.x + p.width);
         let cy1 = Math.min(Math.max(bird.y, p.y), p.y + p.height);
         let cy2 = Math.min(
@@ -254,6 +256,8 @@ function render() {
     s_text.GameOver.draw(ctx, width2 - s_text.GameOver.width / 2, height - 400);
     s_score.draw(ctx, width2 - s_score.width / 2, height - 340);
     s_buttons.Ok.draw(ctx, okbtn.x, okbtn.y);
+  } else {
+    s_numberB.draw(ctx, null, 20, score, width2);
   }
 }
 main();
