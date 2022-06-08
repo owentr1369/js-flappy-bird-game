@@ -26,6 +26,8 @@ const states = {
   Game: 1,
   Score: 2,
 };
+let okbtn;
+
 let bird = {
   x: 60,
   y: 0,
@@ -182,6 +184,14 @@ function main() {
   img.onload = function () {
     initSprites(this);
     ctx.fillStyle = s_bg.color;
+
+    okbtn = {
+      x: (width - s_buttons.Ok.width) / 2,
+      y: height - 200,
+      width: s_buttons.Ok.width,
+      height: s_buttons.Ok.height,
+    };
+
     run();
   };
   img.src = "./assets/sheet.png";
@@ -228,6 +238,7 @@ function render() {
   if (currentState === states.Score) {
     s_text.GameOver.draw(ctx, width2 - s_text.GameOver.width / 2, height - 400);
     s_score.draw(ctx, width2 - s_score.width / 2, height - 340);
+    s_buttons.Ok.draw(ctx, okbtn.x, okbtn.y);
   }
 }
 main();
